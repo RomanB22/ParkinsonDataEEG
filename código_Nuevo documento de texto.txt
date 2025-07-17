@@ -1,0 +1,2 @@
+en las imágenes están los errores que me da al ejecutar clea_signal
+clean_signal2 es lo que estoy utilizando para filtrar por banda
