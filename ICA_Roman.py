@@ -14,10 +14,8 @@ relativePath = './datos_PD_Anjum'
 ## Getting all the paths to the EEGLab '.set' files
 filePaths = gather_all_setFile_paths(relativePath)
 
-## EDA
+## Change subject
 ith_path = 5
-
-eog_channels = ["Fp1"] #["Fp1", "Fp2"] Here we propose the channel/s with the largest artifacts as a reference. Could change
 
 ## Extract and read the EEGLab set/fdt file
 filePath = filePaths[ith_path]
@@ -29,6 +27,7 @@ raw.info["bads"] = [raw.ch_names[i] for i in badChannels]  # Mark the bad channe
 raw.plot(order=badChannels, n_channels=len(badChannels))
 plt.show()
 
+# eog_channels = ["Fp1"] #["Fp1", "Fp2"] Here we propose the channel/s with the largest artifacts as a reference. Could change
 eog_channels = [raw.ch_names[i] for i in badChannels] #  Here we propose the channel/s with the largest artifacts as a reference. Could change
 
 
@@ -41,7 +40,7 @@ eog_evoked = create_eog_epochs(raw, ch_name=eog_channels).average()
 eog_evoked.apply_baseline(baseline=(None, -0.2))
 eog_evoked.plot_joint()
 
-filt_raw = raw.copy().filter(l_freq=1.0, h_freq=None)
+filt_raw = raw.copy().filter(l_freq=2.0, h_freq=None)
 filt_raw.notch_filter(60)  # Notch 50 Hz (o 60 Hz según país)
 ica = ICA(n_components=15, max_iter="auto", random_state=97)
 ica.fit(filt_raw)
